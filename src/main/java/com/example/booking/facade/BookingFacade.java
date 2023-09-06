@@ -1,8 +1,8 @@
-package facade;
+package com.example.booking.facade;
 
-import model.Event;
-import model.Ticket;
-import model.User;
+import com.example.booking.model.User;
+import com.example.booking.model.Event;
+import com.example.booking.model.Ticket;
 
 import java.util.Date;
 import java.util.List;

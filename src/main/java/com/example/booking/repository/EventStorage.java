@@ -1,7 +1,7 @@
-package repository;
+package com.example.booking.repository;
 
-import model.Event;
-import model.EventImpl;
+import com.example.booking.model.Event;
+import com.example.booking.model.EventImpl;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;

@@ -1,10 +1,15 @@
-package service;
+package com.example.booking.service;
 
-import dao.EventDao;
-import model.Event;
+import com.example.booking.dao.EventDao;
+import com.example.booking.model.Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +30,7 @@ public class EventService {
         return eventDao.getEventsForDay(day);
     }
 
+//    @JmsListener(destination = "booking-listener")
     public Event createEvent(Event event) {
         return eventDao.createEvent(event);
     }

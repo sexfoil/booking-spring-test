@@ -1,4 +1,4 @@
-package repository;
+package com.example.booking.repository;
 
 import java.util.Comparator;
 import java.util.HashMap;

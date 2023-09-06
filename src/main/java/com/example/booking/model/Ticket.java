@@ -1,4 +1,4 @@
-package model;
+package com.example.booking.model;
 
 /**
  * Created by maksym_govorischev.

@@ -1,7 +1,7 @@
-package repository;
+package com.example.booking.repository;
 
-import model.Ticket;
-import model.TicketImpl;
+import com.example.booking.model.Ticket;
+import com.example.booking.model.TicketImpl;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

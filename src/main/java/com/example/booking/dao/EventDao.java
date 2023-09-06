@@ -1,13 +1,12 @@
-package dao;
+package com.example.booking.dao;
 
-import jms.MessageSender;
-import model.Event;
+import com.example.booking.repository.EventStorage;
+import com.example.booking.jms.MessageSender;
+import com.example.booking.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
-import repository.EventStorage;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +45,7 @@ public class EventDao {
         event.setId(id);
         eventStorage.getStorageMap().put(id, event);
         Event newEvent = getEventById(id);
-        messageSender.sendTextMessage(DESTINATION, "TEST LISTENER");
+//        messageSender.sendTextMessage(DESTINATION, "TEST LISTENER");
         return newEvent;
     }
 

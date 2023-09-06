@@ -1,4 +1,4 @@
-package model;
+package com.example.booking.model;
 
 public class UserImpl implements User {
 

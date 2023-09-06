@@ -1,10 +1,13 @@
-package jms;
+package com.example.booking.jms;
 
+import com.example.booking.model.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
+
+import javax.jms.Session;
 
 @Component
 public class MessageSender {

@@ -1,12 +1,12 @@
-package dao;
+package com.example.booking.dao;
 
-import model.Event;
-import model.Ticket;
-import model.TicketImpl;
-import model.User;
+import com.example.booking.model.User;
+import com.example.booking.repository.TicketStorage;
+import com.example.booking.model.Event;
+import com.example.booking.model.Ticket;
+import com.example.booking.model.TicketImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import repository.TicketStorage;
 
 import java.util.List;
 import java.util.stream.Collectors;

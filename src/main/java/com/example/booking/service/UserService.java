@@ -1,7 +1,7 @@
-package service;
+package com.example.booking.service;
 
-import dao.UserDao;
-import model.User;
+import com.example.booking.dao.UserDao;
+import com.example.booking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package repository;
+package com.example.booking.repository;
 
-import model.User;
-import model.UserImpl;
+import com.example.booking.model.User;
+import com.example.booking.model.UserImpl;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

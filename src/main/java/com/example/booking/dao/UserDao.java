@@ -1,9 +1,9 @@
-package dao;
+package com.example.booking.dao;
 
-import model.User;
+import com.example.booking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import repository.UserStorage;
+import com.example.booking.repository.UserStorage;
 
 import java.util.List;
 import java.util.stream.Collectors;

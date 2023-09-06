@@ -1,19 +1,20 @@
-package facade;
+package com.example.booking.facade;
 
-import jms.MessageListener;
-import jms.MessageSender;
-import model.Event;
-import model.Ticket;
-import model.User;
+import com.example.booking.model.User;
+import com.example.booking.model.Event;
+import com.example.booking.model.Ticket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-import service.EventService;
-import service.TicketService;
-import service.UserService;
+import com.example.booking.service.EventService;
+import com.example.booking.service.TicketService;
+import com.example.booking.service.UserService;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.TextMessage;
 import java.util.Date;
 import java.util.List;
 
@@ -22,20 +23,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     private static Logger log = LoggerFactory.getLogger(BookingFacadeImpl.class);
 
-    private final EventService eventService;
-    private final TicketService ticketService;
-    private final UserService userService;
-
-    private MessageListener messageListener;
-
-
-    public BookingFacadeImpl(EventService eventService, TicketService ticketService, UserService userService, MessageListener messageListener) {
-        this.eventService = eventService;
-        this.ticketService = ticketService;
-        this.userService = userService;
-        this.messageListener = messageListener;
-
-    }
+    @Autowired
+    private EventService eventService;
+    @Autowired
+    private TicketService ticketService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public Event getEventById(long id) {
