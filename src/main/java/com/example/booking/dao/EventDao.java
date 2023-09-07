@@ -1,7 +1,7 @@
 package com.example.booking.dao;
 
 import com.example.booking.repository.EventStorage;
-import com.example.booking.jms.MessageSender;
+import com.example.booking.jms.BookingMessageSender;
 import com.example.booking.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class EventDao {
     private EventStorage eventStorage;
 
     @Autowired
-    private MessageSender messageSender;
+    private BookingMessageSender bookingMessageSender;
 
     public Event getEventById(long id) {
         return eventStorage.getStorageMap().get(id);
@@ -45,7 +45,6 @@ public class EventDao {
         event.setId(id);
         eventStorage.getStorageMap().put(id, event);
         Event newEvent = getEventById(id);
-//        messageSender.sendTextMessage(DESTINATION, "TEST LISTENER");
         return newEvent;
     }
 

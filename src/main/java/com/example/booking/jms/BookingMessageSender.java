@@ -1,21 +1,18 @@
 package com.example.booking.jms;
 
-import com.example.booking.model.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Session;
-
 @Component
-public class MessageSender {
+public class BookingMessageSender {
 
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    private static Logger log = LoggerFactory.getLogger(MessageSender.class);
+    private static Logger log = LoggerFactory.getLogger(BookingMessageSender.class);
 
     public void sendTextMessage(String destination, String message) {
         log.info("Sending message to '{}' with text: '{}'", destination, message);

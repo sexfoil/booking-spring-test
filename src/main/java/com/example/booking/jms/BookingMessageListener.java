@@ -18,10 +18,12 @@ public class BookingMessageListener {
 
     private static Logger log = LoggerFactory.getLogger(BookingMessageListener.class);
 
+    public static final String DESTINATION = "booking-listener";
+
     @Autowired
     private BookingFacade bookingFacade;
 
-    @JmsListener(destination = "booking-listener")
+    @JmsListener(destination = DESTINATION)
     public void bookingJmsListen(TextMessage message) throws JMSException {
         String textMessage = message.getText();
         log.info("Received message id='{}': {}", message.getJMSMessageID(), textMessage);
