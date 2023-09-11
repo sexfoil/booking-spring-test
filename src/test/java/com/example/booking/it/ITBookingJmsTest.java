@@ -1,5 +1,6 @@
 package com.example.booking.it;
 
+import com.example.booking.BookingApplication;
 import com.example.booking.dao.EventDao;
 import com.example.booking.dao.TicketDao;
 import com.example.booking.dao.UserDao;
@@ -14,11 +15,15 @@ import com.example.booking.service.TicketService;
 import com.example.booking.service.UserService;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,25 +31,36 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import javax.jms.*;
 
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { ITBookingJmsTest.TestConfig.class,
-        BookingMessageListener.class, BookingMessageSender.class, BookingFacadeImpl.class,
-        EventService.class, TicketService.class, UserService.class,
-        EventDao.class, TicketDao.class, UserDao.class,
-        EventStorage.class, TicketStorage.class, UserStorage.class,
-        String.class
-})
+//@ContextConfiguration(classes = { ITBookingJmsTest.TestConfig.class,
+//        BookingMessageListener.class, BookingMessageSender.class, BookingFacadeImpl.class,
+//        EventService.class, TicketService.class, UserService.class,
+//        EventDao.class, TicketDao.class, UserDao.class,
+//        EventStorage.class, TicketStorage.class, UserStorage.class,
+//        String.class
+//})
+@AutoConfigureMockMvc
+@SpringBootTest(classes = BookingApplication.class)
 public class ITBookingJmsTest {
 
 
@@ -59,6 +75,10 @@ public class ITBookingJmsTest {
 
     @Autowired
     private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private MockMvc mockMvc;
+
 
     @Test
     public void whenListening_thenReceivingCorrectMessage() throws JMSException {
@@ -89,6 +109,19 @@ public class ITBookingJmsTest {
 
         assertEquals(messageText, ((TextMessage) sentMessage).getText());
     }
+
+    @Test
+    public void endpointTest() throws Exception {
+        final String eventName = "MyEvent";
+        final String expected = "CREATE MESSAGE: createEvent/" + eventName;
+
+        MvcResult result = mockMvc.perform(get("/jms/create/{title}", eventName))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+    }
+
     @Configuration
     @EnableJms
     static class TestConfig {
